@@ -1,16 +1,22 @@
-from django.shortcuts import render, HttpResponseRedirect, reverse
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from django.conf import settings
-
-from homepage.forms import LoginForm, SignupForm
+from homepage.forms import LoginForm
+from homepage.forms import SignupForm
 from homepage.models import myuser
+
+from django.conf import settings
+from django.contrib.auth import authenticate
+from django.contrib.auth import login
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import HttpResponseRedirect
+from django.shortcuts import render
+from django.shortcuts import reverse
 
 
 @login_required
 def homepage_view(request):
     return render(request, 'index.html', {
-        "model": settings.AUTH_USER_MODEL
+        "model": settings.AUTH_USER_MODEL,
+        "display_name": request.user.get_full_name()
     })
 
 
